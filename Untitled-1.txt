@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rashed | Calz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #565656;
+      --secondary: #4c4c4c;
+      --text: #737272;
+      --bg:#aaaaaa ;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    .splash-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--primary);
+      display: grid;
+      place-items: center;
+      z-index: 1000;
+      transition: opacity 0.8s ease;
+    }
+
+    .splash-logo {
+      width: 80px; height: 80px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22c-5.514 0-10-4.486-10-10S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm4.293-13.707L10 14.586l-2.293-2.293-1.414 1.414L10 17.414l7.707-7.707-1.414-1.414z"/></svg>') no-repeat center/contain;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    header {
+      background: var(--primary);
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+      align-items: center;
+      background: rgb(90, 90, 90);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .skill-card {
+      background: #5f5f5f;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+    }
+
+    .social-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    footer {
+      background: var(--primary);
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      color: #b6b6b6;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        flex-direction: column;
+        background: var(--primary);
+        width: 100%;
+        padding: 1rem;
+        transition: right 0.3s ease;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="splash-screen">
+  <div class="splash-logo"></div>
+</div>
+
+<header>
+  <nav>
+    <h1>Calz</h1>
+    <button class="hamburger" aria-expanded="false" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero-section">
+    <h1>Hello, I'm Rashed</h1>
+    <p>Junior Web Developer from Saudi Arabia</p>
+  </section>
+
+
+
+
+
+
+
+
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <h2>About Me</h2>
+        <p>Hello!
+          My name is Rashed, and I am from Saudi Arabia. I am currently a high school student, and I am 16 years old.
+          I have been learning programming for almost two years. I won't deny that it was very difficult at the beginning, but thanks to God, I kept going and improved.
+          Now, you are visiting my personal website, and I’m very proud to share my journey with you.</p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Web Development</h3>
+        <p>HTML, CSS, JavaScript</p>
+      </div>
+      <div class="skill-card">
+        <h3>Programming</h3>
+        <p>Python, Problem Solving</p>
+      </div>
+      <div class="skill-card">
+        <h3>Design</h3>
+        <p>UI Design</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="social-links">
+      <a href="https://discord.com/users/866233150001643520" class="social-link" target="_blank">
+        <i class="fab fa-discord social-icon"></i>
+        <span>Discord</span>
+      </a>
+      <a href="https://www.instagram.com/5_1w__/" class="social-link" target="_blank">
+        <i class="fab fa-instagram social-icon"></i>
+        <span>Instagram</span>
+      </a>
+      <a href="https://www.tiktok.com/@16ypq" class="social-link" target="_blank">
+        <i class="fab fa-tiktok social-icon"></i>
+        <span>TikTok</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 All Rights Reserved | Rashed (Calz)</p>
+</footer>
+
+<script>
+  // Splash Screen
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('.splash-screen').style.opacity = '0';
+      setTimeout(() => {
+        document.querySelector('.splash-screen').remove();
+      }, 800);
+    }, 2500);
+  });
+
+  // Mobile Navigation
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+  });
+
+  // Smooth Scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
