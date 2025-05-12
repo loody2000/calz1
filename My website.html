@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>راشد | calz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #ffffff;
+      --text: #e0e0e0;
+      --bg: #000000;
+      --accent: #4a4a4a;
+      --glow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(0.8px);
+      box-shadow: var(--glow);
+      will-change: transform;
+    }
+    
+    .particle-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(to left, transparent, rgba(255,255,255,0.8), transparent);
+      pointer-events: none;
+      transform-origin: right center;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.95);
+      padding: 0.8rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      background: rgba(0, 0, 0, 0.85);
+      box-shadow: var(--glow);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav h1 {
+      color: var(--secondary);
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-shadow: var(--glow);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      text-shadow: var(--glow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--secondary);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      text-shadow: var(--glow);
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+
+    .splash-screen {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: var(--primary);
+      display: grid;
+      place-items: center;
+      z-index: 1000;
+      transition: opacity 0.8s ease;
+    }
+
+    .splash-logo {
+      text-align: center;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .splash-logo h1 {
+      font-size: 4rem;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+      animation: fadeIn 1.5s ease-out;
+      text-shadow: 0 0 25px rgba(255,255,255,0.9);
+    }
+
+    .loading-bar {
+      width: 200px;
+      height: 3px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .loading-progress {
+      width: 0%;
+      height: 100%;
+      background: var(--secondary);
+      animation: load 2.5s ease-in-out;
+      box-shadow: var(--glow);
+    }
+
+    @keyframes load {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    }
+
+    .hero-section p {
+      color: var(--text);
+      text-shadow: var(--glow);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      background: rgba(255,255,255,0.03);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      margin: 2rem 0;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: var(--glow);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .skill-card {
+      background: rgba(255,255,255,0.03);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.1);
+      box-shadow: var(--glow);
+    }
+
+    .skill-card h3 {
+      color: var(--secondary);
+      text-shadow: var(--glow);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--secondary);
+      transition: all 0.3s ease;
+      text-shadow: var(--glow);
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      color: var(--text);
+      filter: brightness(1.2);
+    }
+
+    .social-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.95);
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      color: var(--secondary);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+      z-index: 1;
+      box-shadow: var(--glow);
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        flex-direction: column;
+        background: rgba(0,0,0,0.95);
+        width: 100%;
+        padding: 1rem;
+        transition: left 0.3s ease;
+        backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(255,255,255,0.2);
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="particles-container" id="particles"></div>
+
+<div class="splash-screen">
+  <div class="splash-logo">
+    <h1>Hi</h1>
+    <div class="loading-bar">
+      <div class="loading-progress"></div>
+    </div>
+  </div>
+</div>
+
+<header>
+  <nav>
+    <h1>calz</h1>
+    <button class="hamburger" aria-expanded="false" aria-label="القائمة">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">معلومات عني</a></li>
+      <li><a href="#skills">عشوائيات</a></li>
+      <li><a href="#contact">اتصل بي</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero-section">
+    <h1>calz/راشد </h1>
+    <p>♔Calz is the best </p>
+  </section>
+
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <h2>معلومات عني</h2>
+        <p> أنا راشد سعودي وعمري ١٦ سنة.   
+قبل سنتين قررت أتعلم البرمجة، وبديت مع لغة بايثون. صراحة أول ما بديت كانت شوي صعبة علي، الأفكار غريبة والأكواد تصدع الراس  وقررت اوقف بعدها بشهر كملت وانت تشوف موقع اقوى  مبرمج ,,اسولف كثير ؟  .</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>عشوائيات</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>تطوير الويب</h3>
+        <p>HTML, CSS, JavaScript</p>
+      </div>
+      <div class="skill-card">
+        <h3>لغات البرمجة</h3>
+        <p>Python, Java, C++</p>
+      </div>
+      <div class="skill-card">
+        <h3>اشياء إضافية</h3>
+        <p>العاب السولز, النوم , الرياضه</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>حساباتي</h2>
+    <div class="social-links">
+      <a href="https://discord.com/users/866233150001643520" class="social-link" target="_blank">
+        <i class="fab fa-discord social-icon"></i>
+        <span>ديسكورد</span>
+      </a>
+      <a href="https://www.instagram.com/5_1w__/" class="social-link" target="_blank">
+        <i class="fab fa-instagram social-icon"></i>
+        <span>إنستغرام</span>
+      </a>
+      <a href="https://www.tiktok.com/@16ypq" class="social-link" target="_blank">
+        <i class="fab fa-tiktok social-icon"></i>
+        <span>تيك توك</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 جميع الحقوق محفوظة | راشد (calz)</p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    
+    const particles = [];
+    const particleCount = 180;
+    const maxDistance = 100;
+    const mouse = { x: null, y: null, radius: 120 };
+    const colors = ['#ffffff', '#e0e0e0', '#a0a0a0'];
+    
+    function createParticle() {
+      const size = Math.random() * 3.5 + 1.5;
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const p = {
+        element: particle,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: size,
+        speedX: Math.random() * 1.2 - 0.6,
+        speedY: Math.random() * 1.2 - 0.6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        originalSize: size
+      };
+      
+      updateParticle(p);
+      container.appendChild(particle);
+      particles.push(p);
+      return p;
+    }
+    
+    function updateParticle(p) {
+      p.element.style.width = `${p.size}px`;
+      p.element.style.height = `${p.size}px`;
+      p.element.style.left = `${p.x}px`;
+      p.element.style.top = `${p.y}px`;
+      p.element.style.backgroundColor = p.color;
+      p.element.style.color = p.color;
+    }
+    
+    function connectParticles() {
+      const oldLines = document.querySelectorAll('.particle-line');
+      oldLines.forEach(line => line.remove());
+      
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < maxDistance) {
+            const line = document.createElement('div');
+            line.className = 'particle-line';
+            const opacity = 1 - distance / maxDistance;
+            
+            line.style.width = `${distance}px`;
+            line.style.left = `${p2.x}px`;
+            line.style.top = `${p2.y}px`;
+            line.style.opacity = opacity * 0.4;
+            line.style.color = p1.color;
+            line.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
+            
+            container.appendChild(line);
+          }
+        }
+        
+        if (mouse.x !== null && mouse.y !== null) {
+          const p = particles[i];
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            const angle = Math.atan2(dy, dx);
+            p.x += Math.cos(angle) * force * 6;
+            p.y += Math.sin(angle) * force * 6;
+            p.size = p.originalSize * (1 + force * 0.7);
+          } else {
+            p.size = p.originalSize;
+          }
+          updateParticle(p);
+        }
+      }
+    }
+    
+    function animate() {
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        
+        if (p.x < 0 || p.x > window.innerWidth) {
+          p.speedX *= -1;
+          p.x = Math.max(0, Math.min(window.innerWidth, p.x));
+        }
+        if (p.y < 0 || p.y > window.innerHeight) {
+          p.speedY *= -1;
+          p.y = Math.max(0, Math.min(window.innerHeight, p.y));
+        }
+        
+        updateParticle(p);
+      });
+      
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+    
+    for (let i = 0; i < particleCount; i++) {
+      createParticle();
+    }
+    
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    
+    window.addEventListener('resize', () => {
+      container.innerHTML = '';
+      particles.length = 0;
+      for (let i = 0; i < particleCount; i++) {
+        createParticle();
+      }
+    });
+    
+    animate();
+  });
+
+  window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  window.addEventListener('load', () => {    
+    setTimeout(() => {
+      const splash = document.querySelector('.splash-screen');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.remove();
+        }, 800);
+      }
+    }, 2500);
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
